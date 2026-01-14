@@ -1,0 +1,22 @@
+header {
+  width: 100%;
+  background-color: rgb(37, 37, 37);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+header h2 {
+  font-size: 1.5rem;
+}
+
+header input[type="text"] {
+  width: 200px;
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 5px;
+}

@@ -1,80 +1,125 @@
-fetch("api.json")
-  .then((res) => res.json())
-  .then((data) => {
-    const pokedex = document.getElementById("pokedex");
-
-    data.results.forEach((pokemon) => {
-      const li = document.createElement("li");
-      li.className = "pokemon-card";
-
-      // Name
-      const name = document.createElement("p");
-      name.textContent = pokemon.name;
-      li.appendChild(name);
-
-      // ID aus URL
-      const urlParts = pokemon.url.split("/");
-      const id = urlParts[urlParts.length - 2];
-
-      // Bild
-      const img = document.createElement("img");
-      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-      img.alt = pokemon.name;
-      li.appendChild(img);
-
-      // Klick Event für Modal
-      li.addEventListener("click", () =>
-        showPokemonStats(pokemon.url, pokemon.name, id)
-      );
-
-      pokedex.appendChild(li);
-    });
-  })
-  .catch((err) => console.error("Fehler beim Laden der Pokémon:", err));
-
-// Modal-Funktion
+const pokedex = document.getElementById("pokedex");
 const modal = document.getElementById("pokemon-modal");
 const modalName = document.getElementById("modal-name");
-const modalImg = document.getElementById("modal-img");
-const modalTypes = document.getElementById("modal-types");
-const modalStats = document.getElementById("modal-stats");
+const modalEvolutions = document.getElementById("modal-evolutions");
 const modalClose = document.getElementById("modal-close");
+const searchInput = document.querySelector("header input");
 
-modalClose.onclick = () => (modal.style.display = "none");
-window.onclick = (e) => {
-  if (e.target === modal) modal.style.display = "none";
+const typeColors = {
+  grass: "#78C850",
+  poison: "#A040A0",
+  fire: "#F08030",
+  water: "#6890F0",
+  bug: "#A8B820",
+  normal: "#A8A878",
+  electric: "#F8D030",
 };
 
-function showPokemonStats(url, name, id) {
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      // Name & Bild
-      modalName.textContent = name;
-      modalImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+modalClose.onclick = () => (modal.style.display = "none");
+window.onclick = (e) => e.target === modal && (modal.style.display = "none");
 
-      // Typen als Icons
-      modalTypes.innerHTML = ""; // vorher löschen
-      data.types.forEach((t) => {
-        const typeImg = document.createElement("img");
-        typeImg.src = `https://raw.githubusercontent.com/duiker101/pokemon-type-icons/master/icons/${t.type.name}.png`;
-        typeImg.alt = t.type.name;
-        typeImg.title = t.type.name; // Tooltip beim Hover
-        typeImg.style.width = "40px"; // Größe anpassen
-        typeImg.style.height = "40px";
-        typeImg.style.margin = "0 5px";
-        modalTypes.appendChild(typeImg);
-      });
+let allPokemon = []; // Alle Pokémon inkl. Farbe und Sprite speichern
 
-      // Stats
-      modalStats.innerHTML = "";
-      data.stats.forEach((stat) => {
-        const li = document.createElement("li");
-        li.textContent = `${stat.stat.name}: ${stat.base_stat}`;
-        modalStats.appendChild(li);
-      });
-
-      // Modal anzeigen
-      modal.style.display = "block";
-    });
+// Lade alle Pokémon-Daten und bereite sie vor
+async function loadPokemon() {
+  const data = await fetch("api.json").then((res) => res.json());
+  const promises = data.results.map(async (p) => {
+    const poke = await fetch(p.url).then((r) => r.json());
+    return {
+      name: p.name,
+      url: p.url,
+      id: poke.id,
+      type: poke.types[0].type.name,
+      sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png`,
+      stats: poke.stats,
+      color: typeColors[poke.types[0].type.name] || "#f2f2f2",
+    };
+  });
+  allPokemon = await Promise.all(promises);
+  renderPokemon(allPokemon);
 }
+
+// Pokémon rendern (ohne async für stabile Reihenfolge)
+function renderPokemon(pokemonList) {
+  pokedex.innerHTML = "";
+  pokemonList.forEach((p) => {
+    const li = document.createElement("li");
+    li.style.backgroundColor = p.color; // Farbe direkt aus gespeicherter Eigenschaft
+    li.innerHTML = `
+      <p>${p.name}</p>
+      <img src="${p.sprite}" alt="${p.name}">
+    `;
+    li.onclick = () => showPokemonWithEvolution(p.url, p.name);
+    pokedex.appendChild(li);
+  });
+}
+
+// Live-Suche
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase();
+  const filtered = allPokemon.filter((p) =>
+    p.name.toLowerCase().includes(query)
+  );
+  renderPokemon(filtered);
+
+  // Flex-Wrap entfernen, wenn etwas eingegeben wird
+  if (query.length > 0) {
+    pokedex.classList.add("no-wrap");
+  } else {
+    pokedex.classList.remove("no-wrap");
+  }
+});
+
+// Modal + Evolutionen anzeigen
+async function showPokemonWithEvolution(url, name) {
+  modalName.textContent = name;
+  modalEvolutions.innerHTML = "";
+
+  const p = await fetch(url).then((r) => r.json());
+  const s = await fetch(p.species.url).then((r) => r.json());
+  const e = await fetch(s.evolution_chain.url).then((r) => r.json());
+
+  const evolutions = [];
+  (function parse(c) {
+    evolutions.push(c.species.name);
+    c.evolves_to.forEach(parse);
+  })(e.chain);
+
+  // Evolutionen anzeigen
+  const promises = evolutions.map(async (n) => {
+    const ev = await fetch(`https://pokeapi.co/api/v2/pokemon/${n}`).then((r) =>
+      r.json()
+    );
+    return {
+      name: n,
+      id: ev.id,
+      type: ev.types[0].type.name,
+      sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${ev.id}.png`,
+      stats: ev.stats,
+      color: typeColors[ev.types[0].type.name] || "#f2f2f2",
+    };
+  });
+
+  const evoData = await Promise.all(promises);
+
+  evoData.forEach((ev) => {
+    const card = document.createElement("div");
+    card.className = "evo-card";
+    card.style.backgroundColor = ev.color;
+    card.innerHTML = `
+      <img src="${ev.sprite}" alt="${ev.name}">
+      <p>${ev.name}</p>
+      <ul class="evo-stats">
+        ${ev.stats
+          .map((st) => `<li>${st.stat.name}: ${st.base_stat}</li>`)
+          .join("")}
+      </ul>
+    `;
+    modalEvolutions.appendChild(card);
+  });
+
+  modal.style.display = "block";
+}
+
+// Starten
+loadPokemon();

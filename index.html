@@ -4,21 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokedex</title>
+
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./header.css" />
+    <link rel="stylesheet" href="./footer.css" />
+    <link rel="stylesheet" href="./responsive.css" />
   </head>
   <body>
+    <header>
+      <h2>Pokedex</h2>
+      <input type="text" placeholder="Suche nach Pokémon..." />
+    </header>
     <ul id="pokedex"></ul>
 
-    <!-- Modal für Stats -->
+    <!-- Modal für Pokémon + Evolutionen -->
     <div id="pokemon-modal" class="modal">
       <div class="modal-content">
         <span id="modal-close">&times;</span>
         <h2 id="modal-name"></h2>
-        <img id="modal-img" src="" alt="" />
-        <p id="modal-types"></p>
-        <ul id="modal-stats"></ul>
+        <div id="modal-evolutions" class="evolution-chain"></div>
       </div>
     </div>
+
+    <footer>Developer Akademie</footer>
 
     <script src="script.js"></script>
   </body>

@@ -1,0 +1,95 @@
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+  }
+
+  #pokedex li {
+    width: 120px;
+    height: 120px;
+  }
+
+  .modal-content {
+    width: 80%;
+  }
+
+  .evo-card {
+    width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h2 {
+    font-size: 1.2rem;
+  }
+
+  header input[type="text"] {
+    width: 100%;
+  }
+
+  #pokedex li {
+    width: 100px;
+    height: 100px;
+    font-size: 0.9rem;
+  }
+
+  #pokedex li img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .evo-card {
+    width: 120px;
+    padding: 5px;
+  }
+
+  .evo-card img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .evo-stats {
+    font-size: 12px;
+    padding-left: 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  header h2 {
+    font-size: 1rem;
+  }
+
+  #pokedex li {
+    width: 90px;
+    height: 90px;
+    font-size: 0.8rem;
+  }
+
+  #pokedex li img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .evo-card {
+    width: 100px;
+  }
+
+  .evo-card img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .evo-stats {
+    font-size: 11px;
+    padding-left: 3px;
+  }
+}
