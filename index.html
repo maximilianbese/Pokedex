@@ -3,31 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokedex</title>
-
-    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn-icons-png.flaticon.com/512/188/188918.png"
+    />
     <link rel="stylesheet" href="./header.css" />
     <link rel="stylesheet" href="./footer.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="./responsive.css" />
+    <title>Pokedex</title>
   </head>
-  <body>
+  <body id="body">
     <header>
-      <h2>Pokedex</h2>
-      <input type="text" placeholder="Suche nach Pokémon..." />
+      <div class="logo-area">
+        <h1>Pokedex</h1>
+      </div>
+      <input
+        id="search"
+        type="text"
+        placeholder="Suche Pokémon..."
+        oninput="searchPokemon()"
+      />
     </header>
-    <ul id="pokedex"></ul>
 
-    <!-- Modal für Pokémon + Evolutionen -->
-    <div id="pokemon-modal" class="modal">
-      <div class="modal-content">
-        <span id="modal-close">&times;</span>
-        <h2 id="modal-name"></h2>
-        <div id="modal-evolutions" class="evolution-chain"></div>
+    <main id="pokedex"></main>
+
+    <div id="load-more-container">
+      <button id="load-btn" onclick="loadMorePokemon()">
+        Lade mehr Pokémon
+      </button>
+    </div>
+
+    <div id="overlay" class="d-none" onclick="closeOverlay()">
+      <div class="detail-card" onclick="event.stopPropagation()">
+        <div id="card-header" class="top">
+          <div class="header-nav">
+            <h2 id="name"></h2>
+            <span id="number"></span>
+          </div>
+          <div id="types-badges"></div>
+          <div class="pokeball-bg"></div>
+          <img id="detail-img" src="" alt="" />
+        </div>
+        <div class="card-body">
+          <nav class="tabs">
+            <button onclick="showTab('about')">About</button>
+            <button onclick="showTab('stats')">Base Stats</button>
+            <button>Gender</button>
+            <button>Shiny</button>
+          </nav>
+          <div id="tab-content"></div>
+          <div class="nav-arrows">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/54/54623.png"
+              class="arrow"
+              onclick="navigate(-1)"
+              alt="prev"
+            />
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/54/54623.png"
+              class="arrow next"
+              onclick="navigate(1)"
+              alt="next"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
+    <div id="loading-screen" class="d-none">
+      <div class="spinner-container">
+        <div class="spinner"></div>
+        <p>Finde Pokémon...</p>
+      </div>
+    </div>
     <footer>Developer Akademie</footer>
-
     <script src="script.js"></script>
   </body>
 </html>

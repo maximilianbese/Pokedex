@@ -98,10 +98,6 @@
     {
       "name": "arbok",
       "url": "https://pokeapi.co/api/v2/pokemon/24/"
-    },
-    {
-      "name": "pikachu",
-      "url": "https://pokeapi.co/api/v2/pokemon/25/"
     }
   ]
 }

@@ -1,95 +1,68 @@
+/* --- Tablets (bis 768px) --- */
 @media (max-width: 768px) {
+  .header-nav h2 {
+    font-size: 24px;
+  }
+
+  .detail-card {
+    width: 90%; /* Die große Karte nutzt mehr Breite vom Bildschirm */
+    max-width: 380px;
+  }
+}
+
+/* --- Smartphones (bis 480px) --- */
+@media (max-width: 480px) {
   header {
     flex-direction: column;
+    gap: 10px;
   }
 
-  #pokedex li {
-    width: 120px;
-    height: 120px;
-  }
-
-  .modal-content {
-    width: 80%;
-  }
-
-  .evo-card {
-    width: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  header h2 {
-    font-size: 1.2rem;
-  }
-
-  header input[type="text"] {
-    width: 100%;
-  }
-
-  #pokedex li {
-    width: 100px;
-    height: 100px;
-    font-size: 0.9rem;
-  }
-
-  #pokedex li img {
-    width: 60px;
-    height: 60px;
-  }
-
-  .modal-content {
-    width: 90%;
-    padding: 15px;
-  }
-
-  .evo-card {
-    width: 120px;
-    padding: 5px;
-  }
-
-  .evo-card img {
-    width: 60px;
-    height: 60px;
-  }
-
-  .evo-stats {
-    font-size: 12px;
-    padding-left: 5px;
-  }
-}
-
-@media (max-width: 320px) {
-  header h2 {
-    font-size: 1rem;
-  }
-
-  #pokedex li {
-    width: 90px;
-    height: 90px;
-    font-size: 0.8rem;
-  }
-
-  #pokedex li img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .modal-content {
-    width: 95%;
+  #pokedex {
+    /* "repeat(2, 1fr)" erzwingt genau zwei Spalten */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
     padding: 10px;
   }
 
-  .evo-card {
-    width: 100px;
+  .pokemon-card-small {
+    padding: 10px;
+    /* Damit die Karten auf kleinen Displays nicht zu hoch wirken */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  .evo-card img {
-    width: 50px;
-    height: 50px;
+  .pokemon-card-small h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
   }
 
-  .evo-stats {
-    font-size: 11px;
-    padding-left: 3px;
+  .pokemon-card-small img {
+    width: 70px;
+    margin: 0 auto; /* Bild zentrieren */
+  }
+
+  .type {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+}
+
+/* --- Sehr kleine Smartphones (bis 320px) --- */
+@media (max-width: 320px) {
+  #pokedex {
+    /* Selbst bei 320px bleiben es 2 Spalten, 
+       wir machen nur die Schrift und Abstände kleiner */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .pokemon-card-small h3 {
+    font-size: 14px;
+  }
+
+  .pokemon-card-small img {
+    width: 60px;
   }
 }
