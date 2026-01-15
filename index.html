@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,9 +8,9 @@
       type="image/png"
       href="https://cdn-icons-png.flaticon.com/512/188/188918.png"
     />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="./header.css" />
     <link rel="stylesheet" href="./footer.css" />
-    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="./responsive.css" />
     <title>Pokedex</title>
   </head>
@@ -35,25 +35,28 @@
       </button>
     </div>
 
-    <div id="overlay" class="d-none" onclick="closeOverlay()">
-      <div class="detail-card" onclick="event.stopPropagation()">
+    <div id="overlay" class="d-none">
+      <div class="detail-card">
         <div id="card-header" class="top">
+          <span class="close-x" onclick="closeOverlay()">&times;</span>
+
           <div class="header-nav">
             <h2 id="name"></h2>
             <span id="number"></span>
           </div>
           <div id="types-badges"></div>
           <div class="pokeball-bg"></div>
-          <img id="detail-img" src="" alt="" />
+          <img id="detail-img" src="" alt="pokemon" />
         </div>
+
         <div class="card-body">
           <nav class="tabs">
             <button onclick="showTab('about')">About</button>
             <button onclick="showTab('stats')">Base Stats</button>
-            <button>Gender</button>
-            <button>Shiny</button>
           </nav>
+
           <div id="tab-content"></div>
+
           <div class="nav-arrows">
             <img
               src="https://cdn-icons-png.flaticon.com/512/54/54623.png"
@@ -78,6 +81,7 @@
         <p>Finde Pokémon...</p>
       </div>
     </div>
+
     <footer>Developer Akademie</footer>
     <script src="script.js"></script>
   </body>

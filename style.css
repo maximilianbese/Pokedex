@@ -81,18 +81,43 @@ body {
 
 .detail-card {
   width: 380px;
+  height: 600px; /* IMMER diese Höhe */
   background: white;
   border-radius: 35px;
-  overflow: hidden;
+  overflow: hidden; /* Verhindert Scrollen komplett */
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-x {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 100;
+  line-height: 0.8;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px; /* Etwas enger zusammengerückt */
+  font-size: 14px;
+}
+
+.close-x:hover {
+  transform: scale(1.2);
 }
 
 .top {
-  height: 320px;
-  padding: 40px 30px;
+  height: 280px; /* Feste Höhe für den Header-Teil */
+  min-height: 280px;
+  padding: 30px 25px;
   position: relative;
   color: white;
-  transition: background 0.3s;
 }
 
 /* Pokeball Hintergrund Effekt */
@@ -121,13 +146,16 @@ body {
 }
 
 .card-body {
+  flex: 1; /* Nimmt den exakten Rest der 600px ein */
   background: white;
   border-radius: 40px 40px 0 0;
-  margin-top: -45px;
-  padding: 40px 30px 20px;
+  margin-top: -40px;
+  padding: 30px 25px 15px;
   color: #333;
   position: relative;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Bestehende Tabs-Definition */
@@ -157,6 +185,40 @@ body {
   outline: none;
 }
 
+#tab-content {
+  flex: 1; /* Nutzt den verfügbaren Platz zwischen Tabs und Pfeilen */
+  overflow: hidden; /* Kein Scrollen erlaubt */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#tab-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional: Damit die Namen der Stats (z.B. Special-Attack) 
+   nicht das Layout sprengen, begrenzen wir die Label-Breite */
+.label {
+  min-width: 100px;
+  display: inline-block;
+}
+
+/* Die Progress-Bar-Container */
+.bar-bg {
+  flex: 1;
+  background-color: #eee;
+  height: 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
 .info-row {
   display: flex;
   margin-bottom: 18px;
@@ -173,19 +235,23 @@ body {
 }
 
 .nav-arrows {
+  margin-top: auto;
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  padding-top: 10px;
 }
+
 .arrow {
   width: 45px;
   cursor: pointer;
   opacity: 0.6;
   transition: 0.2s;
 }
+
 .arrow:hover {
   opacity: 1;
 }
+
 .arrow.next {
   transform: rotate(180deg);
 }
