@@ -1,32 +1,59 @@
-/* --- Tablets (bis 768px) --- */
-@media (max-width: 768px) {
-  .header-nav h2 {
-    font-size: 24px;
-  }
-
-  .detail-card {
-    width: 90%; /* Die große Karte nutzt mehr Breite vom Bildschirm */
-    max-width: 380px;
-  }
-}
-
-/* --- Smartphones (bis 480px) --- */
-@media (max-width: 480px) {
+/* --- Tablets und große Smartphones (bis 900px) --- */
+@media (max-width: 900px) {
   header {
-    flex-direction: column;
-    gap: 10px;
+    padding: 20px;
   }
 
   #pokedex {
-    /* "repeat(2, 1fr)" erzwingt genau zwei Spalten */
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
+    padding: 15px;
+  }
+}
+
+/* --- Mittlere Smartphones (bis 600px) --- */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 15px;
+  }
+
+  #search {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .detail-card {
+    width: 95%;
+    height: 580px;
+    border-radius: 25px;
+  }
+
+  #detail-img {
+    width: 150px;
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 5px;
+  }
+
+  .top {
+    height: 250px;
+    min-height: 250px;
+  }
+}
+
+/* --- Kleine Smartphones (bis 420px) --- */
+@media (max-width: 420px) {
+  #pokedex {
+    grid-template-columns: repeat(2, 1fr); /* Erzwingt zwei Spalten */
+    gap: 10px;
     padding: 10px;
   }
 
   .pokemon-card-small {
-    padding: 10px;
-    /* Damit die Karten auf kleinen Displays nicht zu hoch wirken */
+    padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,21 +67,36 @@
 
   .pokemon-card-small img {
     width: 70px;
-    margin: 0 auto; /* Bild zentrieren */
+    margin: 5px auto 0;
   }
 
   .type {
     font-size: 10px;
     padding: 2px 8px;
+    margin-right: 4px;
+  }
+
+  .tabs button {
+    font-size: 12px;
+  }
+
+  .label {
+    width: 80px;
+    font-size: 12px;
+  }
+
+  .value {
+    font-size: 12px;
   }
 }
 
-/* --- Sehr kleine Smartphones (bis 320px) --- */
+/* --- Sehr kleine Geräte (bis 320px) --- */
 @media (max-width: 320px) {
+  .header-nav h2 {
+    font-size: 20px;
+  }
+
   #pokedex {
-    /* Selbst bei 320px bleiben es 2 Spalten, 
-       wir machen nur die Schrift und Abstände kleiner */
-    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
 
